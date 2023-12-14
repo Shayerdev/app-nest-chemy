@@ -8,13 +8,16 @@ export class AmazonService {
     private checkPage: string =  "https://www.amazon.com/ap/signin?openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2F%3Fref_%3Dnav_custrec_signin&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=usflex&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0";
     private waitTime:number = 3000;
 
-    private async launch(proxy: string){
+    private async launch(proxy?: string|undefined){
+        const args = [];
+
+        if(proxy)
+            args.push(`--proxy-server:${proxy}`);
+
         return await puppeteer.launch({
             headless: false,
             channel: "chrome",
-            args: [
-                `--proxy-server:${proxy}`
-            ]
+            args: args
         })
     }
 
@@ -26,6 +29,10 @@ export class AmazonService {
 
         // Create Page
         const page = await browser.newPage();
+
+        // Set UserAgent
+        if(dto.useragent)
+            await page.setUserAgent(dto.useragent);
 
         // Go to checker page
         await page.goto(this.checkPage);
