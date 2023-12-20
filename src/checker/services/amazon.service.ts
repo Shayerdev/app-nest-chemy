@@ -1,7 +1,9 @@
 import {Injectable} from "@nestjs/common";
 import {PlatformCheckerDto} from "../dto/platform-checker.dto";
+import AmazonCaptchaPlugin from "@mihnea.dev/puppeteer-extra-amazon-captcha";
+import puppeteerExtra from 'puppeteer-extra';
 import puppeteer, {Page} from 'puppeteer';
-
+import {captchaImageWithTextByUrl} from "../../utils/captcha-image";
 
 @Injectable()
 export class AmazonService {
@@ -14,7 +16,9 @@ export class AmazonService {
         if(proxy)
             args.push(`--proxy-server:${proxy}`);
 
-        return await puppeteer.launch({
+        await puppeteerExtra.use(AmazonCaptchaPlugin());
+
+        return await puppeteerExtra.launch({
             headless: false,
             channel: "chrome",
             args: args
@@ -39,10 +43,9 @@ export class AmazonService {
 
         try {
             // Check exist captcha form
-            const skipCaptcha = await this.checkImageCaptcha(page);
-            if(!skipCaptcha)
-                return { captcha: true, email: dto.email }
-
+            // const skipCaptcha = await this.checkImageCaptcha(page);
+            // if(!skipCaptcha)
+            //     return { captcha: true, email: dto.email }
             // Check exist user
             return await this.checkEmailExist(page, dto.email);
         } catch (e: unknown) {
@@ -60,6 +63,19 @@ export class AmazonService {
             try {
                 const captchaTest = await page.$('form[action="/errors/validateCaptcha"]');
                 if(captchaTest) {
+
+                    // Get attr src img captcha
+                    const srcImgCaptcha = await page.evaluate(() => {
+                        const tagImgCaptcha = document.querySelector('img[src*="captcha"]');
+                        return tagImgCaptcha ? tagImgCaptcha.getAttribute('src') : null;
+                    });
+
+                    if(!srcImgCaptcha)
+                        resolve(true);
+
+                    const renderTextImgCaptcha = await captchaImageWithTextByUrl(srcImgCaptcha);
+
+                    //console.log(renderTextImgCaptcha);
                     resolve(false);
                 } else {
                     resolve(true);
@@ -75,7 +91,10 @@ export class AmazonService {
         page: Page,
         email: string
     ) {
-        return new Promise( async (resolve, reject) => {
+        return new Promise( async (
+            resolve,
+            reject
+        ) => {
             try {
                 // Append field User data to form Input
                 await page.type("#ap_email", email, {

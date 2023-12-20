@@ -1,11 +1,11 @@
 import {Injectable} from "@nestjs/common";
-import {PlatformCheckerDto} from "../dto/platform-checker.dto";
 import puppeteer, {Page} from 'puppeteer';
+import {PlatformCheckerDto} from "../dto/platform-checker.dto";
 
 @Injectable()
-export class FacebookService {
-    private checkPage: string = "https://www.facebook.com/login/identify/";
-    private waitTime:number = 3000;
+export class PaypalService {
+    private checkPage: string = "https://www.paypal.com/authflow/password-recovery/";
+    private waitTime: number = 3000;
 
     private async launch(proxy?: string|undefined){
         const args = [];
@@ -23,7 +23,8 @@ export class FacebookService {
     async check (
         dto: PlatformCheckerDto
     ) {
-        // Launch the browser
+
+        // Launch the PayPal browser
         const browser = await this.launch(dto.proxy);
 
         // Create Page
@@ -52,33 +53,32 @@ export class FacebookService {
         page: Page,
         email: string
     ) {
-        return new Promise(async (
+        return new Promise( async (
             resolve,
             reject
         ) => {
             try {
                 // Append field User data to form Input
-                await page.type("#identify_email", email, {
+                await page.type("#pwrStartPageEmail", email, {
                     delay: 80
                 });
 
                 // Click validate Form
-                await page.click("#did_submit", {
+                await page.click("#pwrStartPageSubmit", {
                     delay: 1000,
                 });
 
                 try {
-                    // Wait response error box or throw
-                    await page.waitForSelector(".uiBoxRed", {
+                    // Wait response error box
+                    await page.waitForSelector("#message_pwrStartPageEmail", {
                         timeout: this.waitTime
                     });
 
-                    // Set Inactive account
                     resolve({
                         email, active: false
                     })
-                }
-                catch (e: unknown){
+
+                } catch (e: unknown) {
                     resolve({
                         email, active: true
                     })
@@ -87,6 +87,7 @@ export class FacebookService {
             catch (e: unknown) {
                 reject('Some error with check email exist');
             }
-        });
+        })
     }
+
 }
