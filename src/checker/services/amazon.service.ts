@@ -19,7 +19,7 @@ export class AmazonService {
         await puppeteerExtra.use(AmazonCaptchaPlugin());
 
         return await puppeteerExtra.launch({
-            headless: false,
+            headless: true,
             channel: "chrome",
             args: args
         })
