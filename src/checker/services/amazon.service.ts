@@ -16,7 +16,6 @@ export class AmazonService {
         if(proxy)
             args.push(`--proxy-server:${proxy}`);
 
-        //Not work. Fix this
         //await puppeteerExtra.use(AmazonCaptchaPlugin());
 
         return await puppeteerExtra.launch({
