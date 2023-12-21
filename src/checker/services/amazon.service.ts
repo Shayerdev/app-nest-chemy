@@ -16,10 +16,12 @@ export class AmazonService {
         if(proxy)
             args.push(`--proxy-server:${proxy}`);
 
-        await puppeteerExtra.use(AmazonCaptchaPlugin());
+        // This fragment code return error for next check
+        //await puppeteerExtra.use(AmazonCaptchaPlugin());
 
         return await puppeteerExtra.launch({
             headless: true,
+            ignoreHTTPSErrors: true,
             channel: "chrome",
             args: args
         })
