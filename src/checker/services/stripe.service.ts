@@ -43,8 +43,8 @@ export class StripeService {
             throw new Error(e as string);
         }
         finally {
-           // await page.close();
-            //await browser.close();
+            await page.close();
+            await browser.close();
         }
 
     }
