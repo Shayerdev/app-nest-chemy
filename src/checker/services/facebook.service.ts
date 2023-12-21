@@ -14,7 +14,8 @@ export class FacebookService {
             args.push(`--proxy-server:${proxy}`);
 
         return await puppeteer.launch({
-            headless: false,
+            headless: true,
+            ignoreHTTPSErrors: true,
             channel: "chrome",
             args: args
         })

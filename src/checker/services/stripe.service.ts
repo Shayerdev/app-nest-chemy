@@ -14,7 +14,8 @@ export class StripeService {
             args.push(`--proxy-server:${proxy}`);
 
         return await puppeteer.launch({
-            headless: false,
+            headless: true,
+            ignoreHTTPSErrors: true,
             channel: "chrome",
             args: args
         })
@@ -43,8 +44,8 @@ export class StripeService {
             throw new Error(e as string);
         }
         finally {
-           // await page.close();
-            //await browser.close();
+            await page.close();
+            await browser.close();
         }
 
     }
