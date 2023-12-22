@@ -44,9 +44,9 @@ export class AmazonService {
 
         try {
             // Check exist captcha form
-            // const skipCaptcha = await this.checkImageCaptcha(page);
-            // if(!skipCaptcha)
-            //     return { captcha: true, email: dto.email }
+            const skipCaptcha = await this.checkImageCaptcha(page);
+            if(!skipCaptcha)
+                return { captcha: true, email: dto.email }
             // Check exist user
             return await this.checkEmailExist(page, dto.email);
         } catch (e: unknown) {
@@ -66,15 +66,15 @@ export class AmazonService {
                 if(captchaTest) {
 
                     // Get attr src img captcha
-                    const srcImgCaptcha = await page.evaluate(() => {
-                        const tagImgCaptcha = document.querySelector('img[src*="captcha"]');
-                        return tagImgCaptcha ? tagImgCaptcha.getAttribute('src') : null;
-                    });
-
-                    if(!srcImgCaptcha)
-                        resolve(true);
-
-                    const renderTextImgCaptcha = await captchaImageWithTextByUrl(srcImgCaptcha);
+                    // const srcImgCaptcha = await page.evaluate(() => {
+                    //     const tagImgCaptcha = document.querySelector('img[src*="captcha"]');
+                    //     return tagImgCaptcha ? tagImgCaptcha.getAttribute('src') : null;
+                    // });
+                    //
+                    // if(!srcImgCaptcha)
+                    //     resolve(true);
+                    //
+                    // const renderTextImgCaptcha = await captchaImageWithTextByUrl(srcImgCaptcha);
 
                     //console.log(renderTextImgCaptcha);
                     resolve(false);
