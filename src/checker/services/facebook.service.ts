@@ -14,7 +14,7 @@ export class FacebookService {
             args.push(`--proxy-server:${proxy}`);
 
         return await puppeteer.launch({
-            headless: true,
+            headless: false,
             ignoreHTTPSErrors: true,
             channel: "chrome",
             args: args
@@ -44,8 +44,8 @@ export class FacebookService {
             throw new Error(e as string);
         }
         finally {
-            await page.close();
-            await browser.close();
+            //await page.close();
+            //await browser.close();
         }
     }
 
@@ -70,19 +70,15 @@ export class FacebookService {
 
                 try {
                     // Wait response error box or throw
-                    await page.waitForSelector(".uiBoxRed", {
-                        timeout: this.waitTime
+                    await page.waitForSelector(".uiBoxRed:not(#openid_error)", {
+                        timeout: 3000
                     });
 
                     // Set Inactive account
-                    resolve({
-                        email, active: false
-                    })
+                    resolve({ email, active: false})
                 }
                 catch (e: unknown){
-                    resolve({
-                        email, active: true
-                    })
+                    resolve({ email, active: true})
                 }
             }
             catch (e: unknown) {
