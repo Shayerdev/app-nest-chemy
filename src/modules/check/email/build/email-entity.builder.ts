@@ -16,8 +16,14 @@ export class EmailEntityBuilder implements EmailCheckerEntityBuildInterface
      * @param email
      * @private
      */
-    #getMxRecords(email: string): Promise<string[]> {
-        return this.checkServiceEmailDns.check<string[]>(email);
+    #getMxRecords(email: string): Promise<string[]>
+    {
+        return this.checkServiceEmailDns.checkMX<string[]>(email);
+    }
+
+    #getDnsStatus(email: string): Promise<boolean>
+    {
+        return this.checkServiceEmailDns.check<boolean>(email)
     }
 
     /**
@@ -30,10 +36,17 @@ export class EmailEntityBuilder implements EmailCheckerEntityBuildInterface
         email: string,
         data:IEmailCheckerResultInterface
     ): Promise<IEmailCheckerResultInterface> {
+        // Get Email domain
+        const getEmailDomain = email.split('@')[1]
+        // Check and get DNS status
+        const dnsCheck = data?.dnsCheck || await this.#getDnsStatus(getEmailDomain)
         // Check and get MX Records
-        const mxRecords = data?.mxRecords || await this.#getMxRecords(email.split('@')[1]);
+        const mxRecords = data?.mxRecords || await this.#getMxRecords(getEmailDomain);
+
+        // Return Build data
         return {
             active: data.active,
+            dnsCheck: dnsCheck,
             mxRecords: mxRecords
         }
     }
