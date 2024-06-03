@@ -1,4 +1,3 @@
-export interface EmailCheckDtoInterface
-{
-    email: string
+export interface EmailCheckDtoInterface {
+    email: string;
 }

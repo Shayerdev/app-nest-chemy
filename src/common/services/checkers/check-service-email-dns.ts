@@ -1,6 +1,6 @@
 import * as dns from 'dns';
-import {CheckServiceDnsInterface} from "./check-service-dns.interface";
-import {Injectable} from "@nestjs/common";
+import { CheckServiceDnsInterface } from './check-service-dns.interface';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class CheckServiceEmailDns implements CheckServiceDnsInterface {
@@ -10,7 +10,7 @@ export class CheckServiceEmailDns implements CheckServiceDnsInterface {
                 if (err) {
                     return reject(err);
                 }
-                const formatAddresses = addresses.map(address => address.exchange);
+                const formatAddresses = addresses.map((address) => address.exchange);
                 resolve(formatAddresses as R);
             });
         });

@@ -3,18 +3,18 @@ import { CheckerController } from './checker.controller';
 import { CheckerService } from './checker.service';
 
 describe('CheckerController', () => {
-  let controller: CheckerController;
+    let controller: CheckerController;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [CheckerController],
-      providers: [CheckerService],
-    }).compile();
+    beforeEach(async () => {
+        const module: TestingModule = await Test.createTestingModule({
+            controllers: [CheckerController],
+            providers: [CheckerService],
+        }).compile();
 
-    controller = module.get<CheckerController>(CheckerController);
-  });
+        controller = module.get<CheckerController>(CheckerController);
+    });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
+    it('should be defined', () => {
+        expect(controller).toBeDefined();
+    });
 });

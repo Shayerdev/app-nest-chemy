@@ -1,6 +1,6 @@
-import {NestFactory} from '@nestjs/core';
-import {AppModule} from './app.module';
-import {setupSwagger} from "./swagger";
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { setupSwagger } from './swagger';
 
 (async () => {
     // Create Factory Nest App

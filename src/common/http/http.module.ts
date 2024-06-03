@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { HttpModule as AxiosHttpModule} from '@nestjs/axios';
+import { HttpModule as AxiosHttpModule } from '@nestjs/axios';
 import { HttpClientProvider } from './http-client.provider';
 
 @Module({

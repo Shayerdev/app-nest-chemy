@@ -1,6 +1,5 @@
-import {IEmailCheckerResultInterface} from "./email.interface";
+import { IEmailCheckerResultInterface } from './email.interface';
 
-export interface EmailCheckerConverterInterface
-{
+export interface EmailCheckerConverterInterface {
     convert(data: any): IEmailCheckerResultInterface;
 }
