@@ -10,4 +10,5 @@ import {CheckServiceEmailDns} from "./check-service-email-dns";
     ],
     exports: ['CheckServiceEmailDns']
 })
-export class CheckerServiceEmailDnsModule {}
+export class CheckerServiceEmailDnsModule {
+}

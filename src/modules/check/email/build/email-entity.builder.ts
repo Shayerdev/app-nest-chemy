@@ -34,7 +34,7 @@ export class EmailEntityBuilder implements EmailCheckerEntityBuildInterface
      */
     async getData(
         email: string,
-        data:IEmailCheckerResultInterface
+        data: IEmailCheckerResultInterface
     ): Promise<IEmailCheckerResultInterface> {
         // Get Email domain
         const getEmailDomain = email.split('@')[1]
