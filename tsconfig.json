@@ -9,7 +9,7 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
@@ -17,5 +17,18 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@app/*": ["*"],
+      "@constants/*": ["shared/constants/*"],
+      "@modules/*": ["modules/*"],
+      "@utils/*": ["utils/*"],
+      "@common/*": ["common/*"],
+      "@common/services" : ["common/services"],
+      "@common/database" : ["common/services/database/*"],
+      "@commonHttp/*": ["common/http/*"],
+      "@client/prisma": ["common/services/database/prisma/client"],
+      "@decorators/*": ["common/decorators/*"],
+      "@commonServiceCheckers/*": ["common/services/checkers/*"]
+    }
   }
 }

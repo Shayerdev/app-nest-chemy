@@ -1,12 +1,11 @@
-// src/common/http/axios-http-client.ts
 import { Injectable } from '@nestjs/common';
 import { AxiosResponse } from 'axios';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
-import { HttpClient } from '../http-client.interface';
+import {HttpClientInterface} from '../http-client.interface';
 
 @Injectable()
-export class AxiosHttpClient implements HttpClient {
+export class AxiosHttpClient implements HttpClientInterface {
     constructor(private readonly httpService: HttpService) {}
 
     async get<T>(url: string, options?: any): Promise<T> {
