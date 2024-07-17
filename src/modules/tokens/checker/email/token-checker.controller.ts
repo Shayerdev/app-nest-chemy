@@ -21,7 +21,7 @@ import {
 import {apiTagsControllerName} from "@constants/swagger/tokens/api.tags.constants";
 
 @ApiTags(apiTagsControllerName)
-@Controller('tokens/checker/email')
+@Controller('v1/tokens/checker/email')
 export class TokenCheckerController {
     /**
      * Constructor.

@@ -15,7 +15,7 @@ import {EmailCheckRequestDto} from "./dto/email-check-request.dto";
 import {CheckerEmailService} from "./checker-email.service";
 
 @ApiTags('Email Checker')
-@Controller('check/email')
+@Controller('v1/check/email')
 export default class CheckerEmailController {
     /**
      *

@@ -15,7 +15,7 @@ import {ResponseInclude} from "@decorators/response/response-include.decorator";
 import {ResponseIncludeInterceptor} from "@common/interceptors/response/response.interceprot";
 
 @ApiTags('Network Checker')
-@Controller('check/network')
+@Controller('v1/check/network')
 export class CheckerNetworkController {
     constructor(
         private readonly checkerNetworkService: CheckerNetworkService
