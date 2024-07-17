@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Emails" ALTER COLUMN "expired" SET DATA TYPE BIGINT;

@@ -1,17 +1,15 @@
-import {Module} from '@nestjs/common';
-import {AppController} from './app.controller';
-import {AppService} from './app.service';
-import {CheckerModule} from './checker/checker.module';
-import {ConfigModule} from '@nestjs/config';
-
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { CheckerEmailModule } from '@modules/check/email/checker-email.module';
+import {CheckerNetworkModule} from "@modules/check/networks/checker-network.module";
+import {TokenCheckerModule} from "@modules/tokens/checker/email/token-checker.module";
 
 @Module({
     imports: [
-        CheckerModule,
+        CheckerEmailModule,
+        CheckerNetworkModule,
+        TokenCheckerModule,
         ConfigModule.forRoot()
     ],
-    controllers: [AppController],
-    providers: [AppService],
 })
-export class AppModule {
-}
+export class AppModule {}

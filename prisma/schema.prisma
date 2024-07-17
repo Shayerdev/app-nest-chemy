@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum NetworkCollectionName {
+  amazon
+  facebook
+  stripe
+  paypal
+}
+
+enum ECollectionCheckerService {
+  whoisxml
+  emailverifier
+}
+
+model Emails {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  email     String   @unique @db.VarChar(255)
+  active    Boolean
+  mxRecords String?
+  smtpCheck Boolean
+  dnsCheck  Boolean
+  msgCheck  String?
+  expired   BigInt
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Networks {
+  id         String                @id @default(uuid())
+  email      String                @unique
+  name       NetworkCollectionName
+  active     Boolean
+  captcha    Boolean?
+  checkpoint String?
+  expired    BigInt
+  createdAt  DateTime              @default(now())
+}
+
+model TokensCheckerEmail {
+  id        String                    @id @default(uuid())
+  checker   ECollectionCheckerService @default(whoisxml)
+  active    Boolean                   @default(false)
+  token     String                    @unique
+  createdAt DateTime                  @default(now())
+}
