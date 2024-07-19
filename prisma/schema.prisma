@@ -19,6 +19,17 @@ enum ECollectionCheckerService {
   emailverifier
 }
 
+enum ProxyType {
+  HTTP
+  SOCKS
+}
+
+enum ProxyStatus {
+  work
+  down
+  init
+}
+
 model Emails {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
@@ -49,4 +60,17 @@ model TokensCheckerEmail {
   active    Boolean                   @default(false)
   token     String                    @unique
   createdAt DateTime                  @default(now())
+}
+
+model Proxy {
+  id        String      @id @default(uuid())
+  type      ProxyType   @default(HTTP)
+  host      String
+  port      String
+  username  String
+  password  String
+  active    Boolean     @default(true)
+  status    ProxyStatus @default(init)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime
 }
