@@ -72,5 +72,5 @@ model Proxy {
   active    Boolean     @default(true)
   status    ProxyStatus @default(init)
   createdAt DateTime    @default(now())
-  updatedAt DateTime
+  updatedAt DateTime?   @default(now())
 }
