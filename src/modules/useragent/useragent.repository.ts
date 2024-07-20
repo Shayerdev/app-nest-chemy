@@ -1,9 +1,10 @@
-import {Prisma, Proxy} from "@prisma/client";
+import {Prisma, Useragent} from "@prisma/client";
 import {Inject, Injectable} from "@nestjs/common";
 import {ConnectionInterface} from "@common/services/database/connection.interface";
 
 @Injectable()
-export default class ProxyRepository {
+export default class UseragentRepository
+{
     /**
      * Construct.
      *
@@ -21,7 +22,7 @@ export default class ProxyRepository {
      *
      * @param query
      */
-    public async getAll(query: Prisma.ProxyWhereInput): Promise<Proxy[]> {
+    public async getAll(query: Prisma.UseragentWhereInput): Promise<Useragent[]> {
         return await this.connection.findMany(this.modelName, query);
     }
 
@@ -30,8 +31,8 @@ export default class ProxyRepository {
      *
      * @param query
      */
-    public async getOne(query: Prisma.ProxyWhereInput): Promise<Proxy> {
-        return await this.connection.findUniqueOrThrow(this.modelName, query);
+    public async getOne(query: Prisma.UseragentWhereInput): Promise<Useragent> {
+        return await this.connection.findUniqueOrThrow(this.modelName, query)
     }
 
     /**
@@ -39,7 +40,7 @@ export default class ProxyRepository {
      *
      * @param data
      */
-    public async create(data: Prisma.ProxyCreateInput): Promise<Proxy> {
+    public async create(data: Prisma.UseragentCreateInput): Promise<Useragent> {
         return await this.connection.create(this.modelName, data);
     }
 
@@ -48,7 +49,7 @@ export default class ProxyRepository {
      *
      * @param query
      */
-    public async delete(query: Prisma.ProxyWhereInput): Promise<Proxy> {
+    public async delete(query: Prisma.UseragentWhereInput): Promise<Useragent> {
         return await this.connection.delete(this.modelName, query);
     }
 
@@ -59,9 +60,9 @@ export default class ProxyRepository {
      * @param data
      */
     public async update(
-        searchParam: Prisma.ProxyWhereInput,
-        data: Prisma.ProxyCreateInput
-    ): Promise<Proxy> {
+        searchParam: Prisma.UseragentWhereInput,
+        data: Prisma.UseragentCreateInput
+    ): Promise<Useragent> {
         return await this.connection.update(this.modelName, searchParam, data);
     }
 }
