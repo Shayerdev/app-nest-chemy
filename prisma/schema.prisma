@@ -74,3 +74,10 @@ model Proxy {
   createdAt DateTime    @default(now())
   updatedAt DateTime?   @default(now())
 }
+
+model Useragent {
+  id        String   @id @default(uuid())
+  useragent String
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
