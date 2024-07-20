@@ -1,11 +1,6 @@
 import {ApiPropertyOptions} from "@nestjs/swagger";
 import {ProxyStatus, ProxyType} from "@prisma/client";
 
-
-export const apiPropertyIdField: ApiPropertyOptions = {
-    description: 'Proxy ID',
-}
-
 export const apiPropertyTypeField: ApiPropertyOptions = {
     description: 'Proxy Type',
     enum: ProxyType
