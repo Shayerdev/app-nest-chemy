@@ -31,7 +31,7 @@ export default class ProxyService {
      * @param dto
      */
     public async update(searchBy: Prisma.ProxyWhereInput, dto: ProxyCreateDto): Promise<Proxy> {
-        const {id} = await this.proxyRepository.getOne({id: searchBy.id});
+        const {id} = await this.proxyRepository.getOne(searchBy);
         return await this.proxyRepository.update({id}, dto);
     }
 
@@ -39,6 +39,6 @@ export default class ProxyService {
      * @param searchBy
      */
     public async delete(searchBy: Prisma.ProxyWhereInput): Promise<Proxy> {
-        return await this.proxyRepository.delete({id: searchBy.id});
+        return await this.proxyRepository.delete(searchBy);
     }
 }
