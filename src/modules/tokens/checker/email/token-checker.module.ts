@@ -8,12 +8,6 @@ import {ModelNameProvider} from "@modules/tokens/checker/email/model-name.provid
 
 @Module({
     controllers: [TokenCheckerController],
-    imports: [
-        DatabaseModule.forRoot({
-            provide: 'DATABASE',
-            useClass: PrismaService,
-        }),
-    ],
     providers: [
         TokenCheckerService,
         TokenCheckerRepository,

@@ -10,8 +10,11 @@ import EmulatePaypal from "@modules/check/networks/factory/networks/emulate/emul
 import {NetworkPaypal} from "@modules/check/networks/factory/networks/network.paypal";
 import EmulateStripe from "@modules/check/networks/factory/networks/emulate/emulate.stripe";
 import {NetworkStripe} from "@modules/check/networks/factory/networks/network.stripe";
+import InvisibleModule from "@common/services/invisible/invisible.module";
 
 @Module({
+    imports: [InvisibleModule],
+    exports: [NetworkService],
     providers: [
         NetworkService,
         NetworkFacebook,
@@ -50,9 +53,6 @@ import {NetworkStripe} from "@modules/check/networks/factory/networks/network.st
             provide: 'EMULATE_STRIPE',
             useClass: EmulateStripe
         }
-    ],
-    exports: [NetworkService],
+    ]
 })
-
-export class CheckerFactoryModule {
-}
+export class CheckerFactoryModule {}
