@@ -7,4 +7,5 @@ export interface ConnectionInterface
     create<T>(model: string, data: any): Promise<T>;
     update<T>(model: string, where: any, data: any): Promise<T>;
     delete<T>(model: string, where: any): Promise<T>;
+    getRandomRow<T>(model: string) : Promise<T>;
 }

@@ -1,6 +1,6 @@
 import {Injectable, OnModuleInit} from '@nestjs/common';
 import {ConnectionInterface} from "../connection.interface";
-import { PrismaClient } from '@prisma/client';
+import {PrismaClient} from '@prisma/client';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements ConnectionInterface, OnModuleInit {
@@ -70,6 +70,25 @@ export class PrismaService extends PrismaClient implements ConnectionInterface, 
      */
     async delete<T>(model: string, where: any): Promise<T> {
         return this[model].delete({where});
+    }
+
+    /**
+     *
+     * @param model
+     */
+    async getRandomRow<T>(model: string): Promise<T | null> {
+        const count = await this[model].count();
+        const randomIndex = Math.floor(Math.random() * count);
+
+        if (!count)
+            return null;
+
+        const result = await this[model].findMany({
+            skip: randomIndex,
+            take: 1,
+        });
+
+        return result[0];
     }
 }
 

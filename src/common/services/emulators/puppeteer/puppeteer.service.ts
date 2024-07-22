@@ -1,4 +1,4 @@
-import {Inject, Injectable} from "@nestjs/common";
+import {Injectable} from "@nestjs/common";
 import {EmulatorInterface} from "@common/services/emulators/emulator.interface";
 import puppeteer, {Browser, Page} from "puppeteer";
 import {EmulatorSetupDataInterface} from "@common/services/emulators/emulator.setup.data.interface";

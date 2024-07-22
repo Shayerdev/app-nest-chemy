@@ -1,6 +1,7 @@
-import { DynamicModule, Module, Provider } from "@nestjs/common";
+import {DynamicModule, Global, Module, Provider} from "@nestjs/common";
 import {ConnectionInterface} from "./connection.interface";
 
+@Global()
 @Module({})
 export class DatabaseModule {
     static forRoot(databaseProvider: Provider<ConnectionInterface>): DynamicModule {

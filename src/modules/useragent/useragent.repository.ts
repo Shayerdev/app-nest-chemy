@@ -1,6 +1,7 @@
-import {Prisma, Useragent} from "@prisma/client";
+import {Prisma, Proxy, Useragent} from "@prisma/client";
 import {Inject, Injectable} from "@nestjs/common";
 import {ConnectionInterface} from "@common/services/database/connection.interface";
+import {IRandomRowRepository} from "@app/shared/interfaces/random-row.repository";
 
 @Injectable()
 export default class UseragentRepository
@@ -23,7 +24,7 @@ export default class UseragentRepository
      * @param query
      */
     public async getAll(query: Prisma.UseragentWhereInput): Promise<Useragent[]> {
-        return await this.connection.findMany(this.modelName, query);
+        return await this.connection.findMany<Useragent>(this.modelName, query);
     }
 
     /**
@@ -32,7 +33,7 @@ export default class UseragentRepository
      * @param query
      */
     public async getOne(query: Prisma.UseragentWhereInput): Promise<Useragent> {
-        return await this.connection.findUniqueOrThrow(this.modelName, query)
+        return await this.connection.findUniqueOrThrow<Useragent>(this.modelName, query)
     }
 
     /**
@@ -41,7 +42,7 @@ export default class UseragentRepository
      * @param data
      */
     public async create(data: Prisma.UseragentCreateInput): Promise<Useragent> {
-        return await this.connection.create(this.modelName, data);
+        return await this.connection.create<Useragent>(this.modelName, data);
     }
 
     /**
@@ -50,7 +51,7 @@ export default class UseragentRepository
      * @param query
      */
     public async delete(query: Prisma.UseragentWhereInput): Promise<Useragent> {
-        return await this.connection.delete(this.modelName, query);
+        return await this.connection.delete<Useragent>(this.modelName, query);
     }
 
     /**
@@ -63,6 +64,14 @@ export default class UseragentRepository
         searchParam: Prisma.UseragentWhereInput,
         data: Prisma.UseragentCreateInput
     ): Promise<Useragent> {
-        return await this.connection.update(this.modelName, searchParam, data);
+        return await this.connection.update<Useragent>(this.modelName, searchParam, data);
+    }
+
+    /**
+     * Get Random Row
+     */
+    public async getRandomRow<T>(): Promise<T> {
+        console.log('Is Useragent')
+        return await this.connection.getRandomRow<T>(this.modelName);
     }
 }

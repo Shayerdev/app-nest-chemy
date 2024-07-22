@@ -5,6 +5,8 @@ import {CheckerNetworkModule} from "@modules/check/networks/checker-network.modu
 import {TokenCheckerModule} from "@modules/tokens/checker/email/token-checker.module";
 import ProxyModule from "@modules/proxy/proxy.module";
 import UseragentModule from "@modules/useragent/useragent.module";
+import {DatabaseModule} from "@common/services/database/connection.module";
+import {PrismaService} from "@common/services/database/prisma/prisma.service";
 
 @Module({
     imports: [
@@ -13,8 +15,11 @@ import UseragentModule from "@modules/useragent/useragent.module";
         TokenCheckerModule,
         UseragentModule,
         ProxyModule,
-        ConfigModule.forRoot()
+        ConfigModule.forRoot(),
+        DatabaseModule.forRoot({
+            provide: 'DATABASE',
+            useClass: PrismaService,
+        }),
     ],
 })
-export class AppModule {
-}
+export class AppModule {}

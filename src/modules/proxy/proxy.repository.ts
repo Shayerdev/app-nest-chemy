@@ -1,9 +1,10 @@
 import {Prisma, Proxy} from "@prisma/client";
 import {Inject, Injectable} from "@nestjs/common";
 import {ConnectionInterface} from "@common/services/database/connection.interface";
+import {IRandomRowRepository} from "@app/shared/interfaces/random-row.repository";
 
 @Injectable()
-export default class ProxyRepository {
+export default class ProxyRepository implements IRandomRowRepository {
     /**
      * Construct.
      *
@@ -22,7 +23,7 @@ export default class ProxyRepository {
      * @param query
      */
     public async getAll(query: Prisma.ProxyWhereInput): Promise<Proxy[]> {
-        return await this.connection.findMany(this.modelName, query);
+        return await this.connection.findMany<Proxy>(this.modelName, query);
     }
 
     /**
@@ -31,7 +32,7 @@ export default class ProxyRepository {
      * @param query
      */
     public async getOne(query: Prisma.ProxyWhereInput): Promise<Proxy> {
-        return await this.connection.findUniqueOrThrow(this.modelName, query);
+        return await this.connection.findUniqueOrThrow<Proxy>(this.modelName, query);
     }
 
     /**
@@ -40,7 +41,7 @@ export default class ProxyRepository {
      * @param data
      */
     public async create(data: Prisma.ProxyCreateInput): Promise<Proxy> {
-        return await this.connection.create(this.modelName, data);
+        return await this.connection.create<Proxy>(this.modelName, data);
     }
 
     /**
@@ -49,7 +50,7 @@ export default class ProxyRepository {
      * @param query
      */
     public async delete(query: Prisma.ProxyWhereInput): Promise<Proxy> {
-        return await this.connection.delete(this.modelName, query);
+        return await this.connection.delete<Proxy>(this.modelName, query);
     }
 
     /**
@@ -62,6 +63,13 @@ export default class ProxyRepository {
         searchParam: Prisma.ProxyWhereInput,
         data: Prisma.ProxyCreateInput
     ): Promise<Proxy> {
-        return await this.connection.update(this.modelName, searchParam, data);
+        return await this.connection.update<Proxy>(this.modelName, searchParam, data);
+    }
+
+    /**
+     * Get Random Row
+     */
+    public async getRandomRow<T>(): Promise<T> {
+        return await this.connection.getRandomRow<T>(this.modelName);
     }
 }

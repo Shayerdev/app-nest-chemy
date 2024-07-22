@@ -6,18 +6,19 @@ import {INetwork} from "@modules/check/networks/factory/network.interface";
 import {EmulatorInterface} from "@common/services/emulators/emulator.interface";
 import {EmulateInterface} from "@modules/check/networks/factory/networks/emulate/emulate.interface";
 import {ENetworkCollectionName} from "@app/shared/enums/ECollectionNetworksName";
+import InvisibleFactoryService from "@common/services/invisible/invisible.factory.service";
 
 export class NetworkAmazon implements INetworkFactory {
     /**
      *
      * @param emulator
      * @param emulateAmazon
+     * @param invisibleFactoryService
      */
     constructor(
-        @Inject('EMULATOR')
-        private readonly emulator: EmulatorInterface,
-        @Inject('EMULATE_AMAZON')
-        private readonly emulateAmazon: EmulateInterface
+        @Inject('EMULATOR') private readonly emulator: EmulatorInterface,
+        @Inject('EMULATE_AMAZON') private readonly emulateAmazon: EmulateInterface,
+        private readonly invisibleFactoryService: InvisibleFactoryService
     ) {
     }
 
@@ -32,10 +33,13 @@ export class NetworkAmazon implements INetworkFactory {
     }
 
     async getResult(dto: CheckNetworkRequestDto): Promise<INetwork> {
+        const useragent = await this.invisibleFactoryService.getResult("useragent");
+        const proxy = await this.invisibleFactoryService.getResult("proxy");
+
         const emulatorInit = await this.emulator.setUp<Page>({
             goTo: this.checkPage,
-            useragent: 'asd',
-            proxy: 'ad',
+            useragent: dto.useragent && useragent,
+            proxy: dto.proxy && proxy,
         });
 
         try {

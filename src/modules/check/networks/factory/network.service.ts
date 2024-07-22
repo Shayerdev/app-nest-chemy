@@ -8,7 +8,8 @@ export class NetworkService {
     constructor(
         @Inject('NETWORKS_FACTORIES')
         private readonly checkerFactories: INetworkFactory[],
-    ) {}
+    ) {
+    }
 
     async check(dto: CheckNetworkRequestDto): Promise<INetwork> {
         const network = this.checkerFactories.find(factory => factory.getName(dto.network));
