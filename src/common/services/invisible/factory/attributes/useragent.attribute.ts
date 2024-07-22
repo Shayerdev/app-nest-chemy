@@ -2,10 +2,11 @@ import {Useragent} from "@prisma/client";
 import {IAttributeInvisible} from "@common/services/invisible/factory/attributes/attributes.interface";
 import {Inject} from "@nestjs/common";
 import {IRandomRowRepository} from "@app/shared/interfaces/random-row.repository";
+import {ECollectionInvisibleService} from "@app/shared/enums/ECollectionInvisibleService";
 
 export default class UseragentAttribute implements IAttributeInvisible
 {
-    private attributeName = 'useragent';
+    private attributeName = ECollectionInvisibleService.useragent;
 
     constructor(
         @Inject('REPOSITORY_USERAGENT')
@@ -13,7 +14,7 @@ export default class UseragentAttribute implements IAttributeInvisible
     ) {
     }
 
-    getName(name: string): boolean {
+    getName(name: ECollectionInvisibleService.useragent): boolean {
         return name === this.attributeName;
     }
 

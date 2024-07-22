@@ -1,5 +1,6 @@
 import {Inject, Injectable} from "@nestjs/common";
 import {IAttributeInvisible} from "@common/services/invisible/factory/attributes/attributes.interface";
+import {ECollectionInvisibleService} from "@app/shared/enums/ECollectionInvisibleService";
 
 @Injectable()
 export default class InvisibleFactoryService {
@@ -12,7 +13,7 @@ export default class InvisibleFactoryService {
     /**
      * @param name
      */
-    public async getResult(name: string): Promise<string> {
+    public async getResult(name: ECollectionInvisibleService): Promise<string> {
         const attribute = this.attributeFactory.find(factory => factory.getName(name));
 
         if (!attribute)

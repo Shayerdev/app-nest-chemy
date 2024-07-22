@@ -3,10 +3,11 @@ import {Inject} from "@nestjs/common";
 import {IRandomRowRepository} from "@app/shared/interfaces/random-row.repository";
 import BuilderProxy from "@utils/builder.proxy";
 import {Proxy} from "@prisma/client";
+import {ECollectionInvisibleService} from "@app/shared/enums/ECollectionInvisibleService";
 
 export default class ProxyAttribute implements IAttributeInvisible
 {
-    private attributeName = 'proxy';
+    private attributeName = ECollectionInvisibleService.proxy;
 
     constructor(
         @Inject("REPOSITORY_PROXY")
@@ -20,7 +21,7 @@ export default class ProxyAttribute implements IAttributeInvisible
      *
      * @param name
      */
-    getName(name: string): boolean {
+    getName(name: ECollectionInvisibleService.proxy): boolean {
         return name === this.attributeName;
     }
 

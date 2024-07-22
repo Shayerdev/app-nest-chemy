@@ -71,7 +71,6 @@ export default class UseragentRepository
      * Get Random Row
      */
     public async getRandomRow<T>(): Promise<T> {
-        console.log('Is Useragent')
         return await this.connection.getRandomRow<T>(this.modelName);
     }
 }
