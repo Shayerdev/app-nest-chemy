@@ -6,18 +6,20 @@ import {INetwork} from "@modules/check/networks/factory/network.interface";
 import {EmulatorInterface} from "@common/services/emulators/emulator.interface";
 import {EmulateInterface} from "@modules/check/networks/factory/networks/emulate/emulate.interface";
 import {ENetworkCollectionName} from "@app/shared/enums/ECollectionNetworksName";
+import InvisibleFactoryService from "@common/services/invisible/invisible.factory.service";
+import {ECollectionInvisibleService} from "@app/shared/enums/ECollectionInvisibleService";
 
 export class NetworkFacebook implements INetworkFactory {
     /**
      *
      * @param emulator
      * @param emulateFacebook
+     * @param invisibleFactoryService
      */
     constructor(
-        @Inject('EMULATOR')
-        private readonly emulator: EmulatorInterface,
-        @Inject('EMULATE_FACEBOOK')
-        private readonly emulateFacebook: EmulateInterface
+        @Inject('EMULATOR') private readonly emulator: EmulatorInterface,
+        @Inject('EMULATE_FACEBOOK') private readonly emulateFacebook: EmulateInterface,
+        private readonly invisibleFactoryService: InvisibleFactoryService
     ) {
     }
 
@@ -32,10 +34,13 @@ export class NetworkFacebook implements INetworkFactory {
     }
 
     async getResult(dto: CheckNetworkRequestDto): Promise<INetwork> {
+        const useragent = await this.invisibleFactoryService.getResult(ECollectionInvisibleService.useragent);
+        const proxy = await this.invisibleFactoryService.getResult(ECollectionInvisibleService.proxy);
+
         const emulatorInit = await this.emulator.setUp<Page>({
             goTo: this.checkPage,
-            useragent: 'asd',
-            proxy: 'ad',
+            useragent: dto.useragent && useragent,
+            proxy: dto.proxy && proxy,
         });
 
         try {
